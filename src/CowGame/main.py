@@ -4,18 +4,25 @@ import game_logic
 
 # Display Constants
 (WIN_WIDTH, WIN_HEIGHT) = (1280, 720)
-background_color = "white"
+game_title = "Cash Cow I: The Cashening"
+background_color = "green"
 locked_frame_rate = 60
 
 
 if __name__ == "__main__":
 
+    # Setup
     pygame.init()
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+    pygame.display.set_caption(game_title)
     clock = pygame.time.Clock()
+    game_running = True
+    
+    player = cow.Cow()
+    
 
-    running = True
-    while running:
+    # Main Loop
+    while game_running:
 
         # Fill Background White
         screen.fill(background_color)
@@ -25,7 +32,7 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:  # event - quit game
                 running = False
 
-        # Handle Player Input
+            # event - player input
 
         # Lock FPS to 60
         clock.tick(locked_frame_rate)

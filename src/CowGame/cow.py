@@ -1,6 +1,6 @@
+import pygame
 
-
-class Cow():
+class Cow(pygame.sprite.Sprite):
     def __init__(self):
         pass
     
