@@ -11,6 +11,7 @@ class Spray(pygame.sprite.Sprite):
 
     def update(self, surf, active, facing_left, player_x, player_y):
         if active:
+            
             if facing_left:
                 tmp_image = pygame.transform.rotate(self.image, 90)
                 self.rect.x = player_x-params.COW_SPRAY_OFFSET_X
@@ -44,20 +45,20 @@ class Cow(pygame.sprite.Sprite):
 
         # Move Based On User Input
         if pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
-            print("[EVENT] UP")
+            print("[COW] UP")
             self.rect.move_ip(0, -params.COW_SPEED_UP)
         if pressed_keys[pygame.K_DOWN] or pressed_keys[pygame.K_s]:
-            print("[EVENT] DOWN")
+            print("[COW] DOWN")
             self.rect.move_ip(0, params.COW_SPEED_DOWN)
         if pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]:
-            print("[EVENT] RIGHT")
+            print("[COW] RIGHT")
             if self.facing_left:
                 self.image = pygame.transform.flip(
                     self.image, flip_x=True, flip_y=False)
                 self.facing_left = not self.facing_left
             self.rect.move_ip(params.COW_SPEED_RIGHT, 0)
         if pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_a]:
-            print("[EVENT] LEFT")
+            print("[COW] LEFT")
             if not self.facing_left:
                 self.image = pygame.transform.flip(
                     self.image, flip_x=True, flip_y=False)
@@ -65,6 +66,14 @@ class Cow(pygame.sprite.Sprite):
             self.rect.move_ip(-params.COW_SPEED_LEFT, 0)
 
         # Keep on Screen
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= params.SCREEN_HEIGHT:
+            self.rect.bottom = params.SCREEN_HEIGHT
+        if self.rect.right > params.SCREEN_WIDTH:
+            self.rect.right = params.SCREEN_WIDTH
+        if self.rect.left < 0:
+            self.rect.left = 0
 
     def attack_position(self, space_pressed):
         if space_pressed:
