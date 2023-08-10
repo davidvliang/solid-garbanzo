@@ -1,41 +1,81 @@
 import pygame
-import cow
-import game_logic
+import sys
+import random
 
-# Display Constants
-(WIN_WIDTH, WIN_HEIGHT) = (1280, 720)
-game_title = "Cash Cow I: The Cashening"
-background_color = "green"
-locked_frame_rate = 60
+import params
+import cow
+import enemy
+import game_logic
 
 
 if __name__ == "__main__":
 
-    # Setup
+    # SETUP
     pygame.init()
-    screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    pygame.display.set_caption(game_title)
+    screen = pygame.display.set_mode(
+        (params.SCREEN_WIDTH, params.SCREEN_HEIGHT))
+    pygame.display.set_caption(params.GAME_TITLE)
     clock = pygame.time.Clock()
     game_running = True
-    
+    attacking = False
+
+    backdrop = pygame.image.load(params.DISPLAY_FILEPATH_BACKDROP)
+    backdropbox = screen.get_rect()
+
     player = cow.Cow()
-    
+    spray = cow.Spray()
+    enemy = enemy.Enemy()
 
-    # Main Loop
+    # GAME LOOP
     while game_running:
-
-        # Fill Background White
-        screen.fill(background_color)
 
         # Handle Events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # event - quit game
-                running = False
+                print("[EVENT] QUIT")
+                game_running = False
 
-            # event - player input
+            elif event.type == pygame.KEYDOWN:  # event - handle input
+                if event.key == pygame.K_ESCAPE:
+                    print("[EVENT] ESCAPE")
+                    game_running = False
+                if event.key == pygame.K_SPACE:  # event - attack
+                    print("[EVENT] SPACEBAR")
+                    attacking = True
+                    player.squirt(attacking)
 
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:  # event - stop attack
+                    print("[EVENT] KEYUP SPACE")
+                    attacking = False
+                    player.squirt(attacking)
+
+        # Fill Background White
+        screen.blit(backdrop, backdropbox)
+
+        # Draw Player
+        screen.blit(player.image, player.rect)
+
+        # Get Player Input
+        pressed_keys = pygame.key.get_pressed()
+
+        # Update Player Input
+        player.movement(pressed_keys)
+        
+        # Handle Attack
+        spray.attack(screen, attacking, player.facing_left, player.rect.x, player.rect.y)
+  
+        # Draw Enemy
+        screen.blit(enemy.image, (params.SCREEN_WIDTH/2, params.SCREEN_HEIGHT/2))
+        
+  
         # Lock FPS to 60
-        clock.tick(locked_frame_rate)
+        clock.tick(params.FRAME_RATE)
 
         # Refresh Display
         pygame.display.flip()
+
+    # EXIT
+    print("[MAIN] EXITED")
+    pygame.quit()
+    sys.exit()
