@@ -4,10 +4,14 @@ import random
 
 
 class Loot(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, pos_x, pos_y):
         super(Loot, self).__init__()
         self.image = pygame.image.load(params.ENEMY_FILEPATH_LOOT)
-        self.image = pygame.transform.scale(self.image, params.ENEMY_LOOT_SIZE)
+        self.image = pygame.transform.scale(self.image, params.ENEMY_LOOTBAG_SIZE)
+        self.rect = self.image.get_rect(
+            center = (pos_x+params.ENEMY_LOOTBAG_SIZE[0], 
+                      pos_y+params.ENEMY_LOOTBAG_SIZE[1])
+        )
         
     def update(self):
         pass

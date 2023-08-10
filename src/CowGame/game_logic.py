@@ -22,5 +22,16 @@ class MilkMeter():
 
 
 class ScoreBoard():
-    pass
+    def __init__(self):
+        super(ScoreBoard, self).__init__()
+        # self.image = pygame.image.load(params.COW_FILEPATH_SPRAY)
+        # self.image = pygame.transform.scale(self.image, params.COW_SPRAY_SIZE)
+        # self.rect = self.image.get_rect()
+        self.kill_count = params.LOGIC_SCOREBOARD_INIT
+        self.money_count = params.LOGIC_SCOREBOARD_INIT
 
+    def update_kills(self):
+        self.kill_count += 1
+    
+    def update_money(self):
+        self.money_count += 25

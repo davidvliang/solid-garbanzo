@@ -23,8 +23,10 @@ COW_SPEED_LEFT = 6
 # ENEMY
 ENEMY_FILEPATH_NORMAL = "Assets/Enemy/money-with-wings.png"
 ENEMY_FILEPATH_LOOT = "Assets/Enemy/money-bag.png"
+ENEMY_LOOTBAG_SIZE = (50, 50)
 ENEMY_SIZE = (75, 75)
 ENEMY_SPAWN_TIME = 1000
+ENEMY_DROP_RATE = .75
 
 
 # GAME LOGIC
