@@ -2,6 +2,16 @@ import pygame
 import params
 import random
 
+
+class Loot(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Loot, self).__init__()
+        self.image = pygame.image.load(params.ENEMY_FILEPATH_LOOT)
+        self.image = pygame.transform.scale(self.image, params.ENEMY_LOOT_SIZE)
+        
+    def update(self):
+        pass
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
@@ -23,7 +33,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.kill()
         elif self.facing_left == False:
             self.rect.move_ip(self.speed, 0)
-            if self.rect.left > params.SCREEN_WIDTH+20:
+            if self.rect.left > params.SCREEN_WIDTH + 20:
                 self.kill()
 
 if __name__ == "__main__":
