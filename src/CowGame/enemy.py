@@ -31,6 +31,8 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = random.randint(1, 5)
 
     def update(self):
+        """Move enemy and despawn once offscreen."""
+        
         if self.facing_left == True:
             self.rect.move_ip(-self.speed, 0)
             if self.rect.right < 0:
@@ -41,4 +43,4 @@ class Enemy(pygame.sprite.Sprite):
                 self.kill()
 
 if __name__ == "__main__":
-    print("ENEMY MONEY")
+    print("[TEST] ENEMY MONEY")
