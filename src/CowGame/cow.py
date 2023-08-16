@@ -9,9 +9,18 @@ class Spray(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, params.COW_SPRAY_SIZE)
         self.rect = self.image.get_rect()
 
-    def update(self, surf, active, facing_left, player_x, player_y):
-        if active:
-            
+    def update(self, surf, attacking, facing_left, player_x, player_y):
+        """Update the position based on the position of player.
+
+        Args:
+            surf (pygame.Surface): The pygame Surface object
+            attacking (bool): If player is attacking
+            facing_left (bool): If player is facing left
+            player_x (int): The player's x-coordinate position
+            player_y (int): The player's x-coordinate position
+        """
+        
+        if attacking:
             if facing_left:
                 tmp_image = pygame.transform.rotate(self.image, 90)
                 self.rect.x = player_x-params.COW_SPRAY_OFFSET_X
@@ -39,9 +48,15 @@ class Cow(pygame.sprite.Sprite):
                 params.SCREEN_HEIGHT/2,
             )
         )
-        self.facing_left = True
+        self.facing_left = True # indicates whether cow is facing left (used to draw the spray attack)
+        self.attacking = False  # indicates whether the cow is in attack mode
 
     def movement(self, pressed_keys):
+        """Move player based on keyboard input
+
+        Args:
+            pressed_keys (list): list of all pushed buttons from pygame.key.get_pressed()
+        """
 
         # Move Based On User Input
         if pressed_keys[pygame.K_UP] or pressed_keys[pygame.K_w]:
@@ -75,8 +90,10 @@ class Cow(pygame.sprite.Sprite):
         if self.rect.left < 0:
             self.rect.left = 0
 
-    def attack_position(self, space_pressed):
-        if space_pressed:
+    def attack_position(self):
+        """Assume the position."""
+        
+        if self.attacking:
             if self.facing_left:
                 self.image = pygame.transform.rotate(self.image, -90)
             else:
@@ -89,4 +106,4 @@ class Cow(pygame.sprite.Sprite):
 
 
 if __name__ == "__main__":
-    print("COW MAN")
+    print("[TEST] COW MAN")
